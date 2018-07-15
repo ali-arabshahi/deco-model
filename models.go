@@ -13,18 +13,35 @@ type Media struct {
 
 // Address type.
 type Address struct {
-	Value     string
-	IsDefault bool
+	Country     string
+	City        string
+	Value       string
+	PhoneNumber string
+	PostCode    string
+	IsDefault   bool
+}
+
+//BankAccount type
+type BankAccount struct {
+	Bank          string
+	Ownername     string
+	AccountNumber string
+}
+
+//Discount model //TODO: ????
+type Discount struct {
+	ID int
 }
 
 //******************************************************************************
 
-// SMS model.
+//SMS model.
 type SMS struct {
 	ID          int64 `json:"-"`
 	Code        int
 	UUID        string
 	PhoneNumber string
+	IsUsed      bool
 	RequestDate time.Time
 	ExpiryDate  time.Time
 }
@@ -56,18 +73,79 @@ const (
 	UserTypeAppUser UserType = "app-user"
 )
 
-// User model.
-type User struct {
+//AppUser model
+type AppUser struct {
 	ID          int `json:"-"`
 	Type        UserType
 	PhoneNumber string
-	RealName    string
+	Fname       string
+	Lname       string
+	Age         int
+	Gender      string
+	Birtdat     string
+	Reference   string
+	Email       string
+	Address     []Address
+	IsComplete  bool
+	Token       string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   time.Time
+}
+
+//ShopUser model
+type ShopUser struct {
+	ID          int `json:"-"`
+	Type        UserType
+	PhoneNumber string
+	Fname       string
+	Lname       string
+	Age         int
+	Gender      string
+	Birtdat     string
+	Reference   string
 	Email       string
 	Address     []Address
 	IsComplete  bool
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	DeletedAt   time.Time
+}
+
+//SuperUser model
+type SuperUser struct {
+	ID          int `json:"-"`
+	Type        UserType
+	PhoneNumber string
+	Fname       string
+	Lname       string
+	Age         int
+	Gender      string
+	Birtdat     string
+	Reference   string
+	Email       string
+	Address     []Address
+	IsComplete  bool
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   time.Time
+}
+
+//DebitcardUser model
+type DebitcardUser struct {
+	ID          int
+	Number      int
+	ShopId      int
+	UserId      int
+	Credit      int
+	Active      bool
+	AssighnDate time.Time
+}
+
+//Mall model
+type Mall struct {
+	ID     int
+	MallId int
 }
 
 //******************************************************************************
@@ -79,21 +157,21 @@ type MetaProduct struct {
 	Revision  int
 }
 
-// Product model.
 type Product struct {
-	ID           int `json:"-"`
-	Name         string
-	Code         int // TODO: ???
-	Price        float32
-	Brand        string
-	Model        string
-	Thumbnail    Media
-	MediaGallery []Media
-	Attributes   map[string]interface{}
-	Description  string
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-	DeletedAt    time.Time
+	ID                int `sql:"id"`
+	Name              string
+	Brand             string
+	Code              int
+	Price             int
+	DeliveryTime      int
+	ManufactureSerial string
+	Thumbnail         string
+	Gallery           []string
+	DeliveryPrice     int
+	Guarantee         string
+	Description       string
+	Attributes        map[string]interface{}
+	CreatedAt         time.Time
 }
 
 //******************************************************************************
@@ -105,32 +183,42 @@ type MetaShop struct {
 	Revision int
 }
 
-// Shop model.
+//Shop model
 type Shop struct {
-	ID           int `json:"-"`
-	Name         string
-	Brand        string
-	Owner        string
-	Keeper       string
-	Address      string  // TODO: ???
-	Thumbnail    Media   // TODO: ???
-	MediaGallery []Media // TODO: ???
-	Description  string
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-	DeletedAt    time.Time
+	ID            int `json:"-"`
+	MallId        int
+	ShopName      string
+	Brand         string
+	Owner         string
+	Keeper        string
+	VirAddress    int // TODO: format 311 floor 3 number 11
+	Adress        string
+	PhoneNumbers  []string
+	MobileNumbers []string
+	Thumbnail     Media   // TODO: create from on file chossen by user
+	MediaGallery  []Media // TODO: hard disk format (by name or by directory hierarchical)
+	Description   string
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	DeletedAt     time.Time
 }
 
 //******************************************************************************
 
-// Contracts model
+//FIXME: add 4 field for %
+//Contracts model (contracts are immutible)
 type Contracts struct {
-	ID        int `json:"-"`
-	ShopID    int
-	Number    int
-	Date      time.Time
-	Duration  time.Duration
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
+	ID            int `json:"-"`
+	ShopID        int
+	Number        int
+	ContractScan  []string
+	ContracrtType []string //pysical or virtual
+	CompaneyName  string
+	Date          time.Time
+	BankAccount   []BankAccount
+	Duration      time.Duration
+	DueDate       int
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	DeletedAt     time.Time
 }
