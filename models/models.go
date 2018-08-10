@@ -30,7 +30,9 @@ type BankAccount struct {
 
 //Discount model //TODO: ????
 type Discount struct {
-	ID int
+	ID         int
+	Percentage int
+	ValidTime  time.Time
 }
 
 //******************************************************************************
@@ -41,7 +43,6 @@ type SMS struct {
 	Code        int
 	UUID        string
 	PhoneNumber string
-	IsUsed      bool
 	RequestDate time.Time
 	ExpiryDate  time.Time
 }
@@ -76,18 +77,14 @@ const (
 //AppUser model
 type AppUser struct {
 	ID          int `json:"-"`
-	Type        UserType
 	PhoneNumber string
-	Fname       string
-	Lname       string
-	Age         int
+	FirstName   string
+	LastName    string
 	Gender      string
-	Birtdat     string
-	Reference   string
+	Birthday    string
 	Email       string
 	Address     []Address
 	IsComplete  bool
-	Token       string
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	DeletedAt   time.Time
@@ -96,14 +93,11 @@ type AppUser struct {
 //ShopUser model
 type ShopUser struct {
 	ID          int `json:"-"`
-	Type        UserType
 	PhoneNumber string
-	Fname       string
-	Lname       string
-	Age         int
+	FirstName   string
+	LastName    string
 	Gender      string
-	Birtdat     string
-	Reference   string
+	Birthday    string
 	Email       string
 	Address     []Address
 	IsComplete  bool
@@ -115,14 +109,11 @@ type ShopUser struct {
 //SuperUser model
 type SuperUser struct {
 	ID          int `json:"-"`
-	Type        UserType
 	PhoneNumber string
-	Fname       string
-	Lname       string
-	Age         int
+	FirstName   string
+	LastName    string
 	Gender      string
-	Birtdat     string
-	Reference   string
+	Birthday    string
 	Email       string
 	Address     []Address
 	IsComplete  bool
@@ -150,6 +141,13 @@ type Mall struct {
 
 //******************************************************************************
 
+//ShopsDetails model
+type ShopsDetails struct {
+	ID         int
+	MallId     int
+	AppAddress int
+}
+
 // MetaProduct model.
 type MetaProduct struct {
 	ID        int `json:"-"`
@@ -165,13 +163,17 @@ type Product struct {
 	Price             int
 	DeliveryTime      int
 	ManufactureSerial string
+	CategoryID        int
+	Discount          int
 	Thumbnail         string
-	Gallery           []string
+	Gallery           []Media
 	DeliveryPrice     int
 	Guarantee         string
 	Description       string
 	Attributes        map[string]interface{}
 	CreatedAt         time.Time
+	UpdatedAt         time.Time
+	DeletedAt         time.Time
 }
 
 //******************************************************************************
@@ -185,22 +187,30 @@ type MetaShop struct {
 
 //Shop model
 type Shop struct {
-	ID            int `json:"-"`
-	MallId        int
-	ShopName      string
-	Brand         string
-	Owner         string
-	Keeper        string
-	VirAddress    int // TODO: format 311 floor 3 number 11
-	Adress        string
-	PhoneNumbers  []string
-	MobileNumbers []string
-	Thumbnail     Media   // TODO: create from on file chossen by user
-	MediaGallery  []Media // TODO: hard disk format (by name or by directory hierarchical)
-	Description   string
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	DeletedAt     time.Time
+	ID           int `json:"-"`
+	MallID       int
+	ContractID   int
+	ProductsID   []int `pg:",array"`
+	ShopName     string
+	Brand        string
+	Owner        string
+	Keeper       string
+	VirAddress   int // TODO: format 311 floor 3 number 11
+	Adress       Address
+	PhoneNumbers []string `pg:",array"`
+	Thumbnail    Media    // TODO: create from on file chossen by user
+	MediaGallery []Media  // TODO: hard disk format (by name or by directory hierarchical)
+	Description  string
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+	DeletedAt    time.Time
+}
+
+//Category model
+type Category struct {
+	ID        int
+	Name      string
+	Thumbnail Media
 }
 
 //******************************************************************************
@@ -208,17 +218,16 @@ type Shop struct {
 //FIXME: add 4 field for %
 //Contracts model (contracts are immutible)
 type Contracts struct {
-	ID            int `json:"-"`
-	ShopID        int
-	Number        int
-	ContractScan  []string
-	ContracrtType []string //pysical or virtual
-	CompaneyName  string
-	Date          time.Time
-	BankAccount   []BankAccount
-	Duration      time.Duration
-	DueDate       int
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	DeletedAt     time.Time
+	ID             int `json:"-"`
+	Number         int
+	ContractScan   []Media
+	ContracrtType  string //pysical or virtual
+	CompaneyName   string
+	Date           time.Time
+	BankAccount    []BankAccount
+	Duration       time.Duration
+	MontlytDueDate time.Time
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+	DeletedAt      time.Time
 }
