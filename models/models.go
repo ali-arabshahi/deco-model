@@ -76,18 +76,19 @@ const (
 
 //AppUser model
 type AppUser struct {
-	ID          int `json:"-"`
-	PhoneNumber string
-	FirstName   string
-	LastName    string
-	Gender      string
-	Birthday    string
-	Email       string
-	Address     []Address
-	IsComplete  bool
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	DeletedAt   time.Time
+	ID                int `json:"-"`
+	PhoneNumber       string
+	FirstName         string
+	LastName          string
+	Gender            string
+	Birthday          string
+	Email             string
+	Address           []Address
+	FavouriteProducts []int `pg:",array"`
+	IsComplete        bool
+	CreatedAt         time.Time
+	UpdatedAt         time.Time
+	DeletedAt         time.Time
 }
 
 //ShopUser model
@@ -126,8 +127,8 @@ type SuperUser struct {
 type DebitcardUser struct {
 	ID          int
 	Number      int
-	ShopId      int
-	UserId      int
+	ShopID      int
+	UserID      int
 	Credit      int
 	Active      bool
 	AssighnDate time.Time
@@ -135,17 +136,16 @@ type DebitcardUser struct {
 
 //Mall model
 type Mall struct {
-	ID     int
-	MallId int
+	ID   int
+	Name string
 }
-
-//******************************************************************************
 
 //ShopsDetails model
 type ShopsDetails struct {
-	ID         int
-	MallId     int
-	AppAddress int
+	ID              int
+	MallID          int
+	AppAddress      int
+	ReadableAddress string
 }
 
 // MetaProduct model.
@@ -157,6 +157,7 @@ type MetaProduct struct {
 
 type Product struct {
 	ID                int `sql:"id"`
+	ShopId            int
 	Name              string
 	Brand             string
 	Code              int
@@ -190,7 +191,6 @@ type Shop struct {
 	ID           int `json:"-"`
 	MallID       int
 	ContractID   int
-	ProductsID   []int `pg:",array"`
 	ShopName     string
 	Brand        string
 	Owner        string
