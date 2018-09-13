@@ -123,7 +123,7 @@ type SuperUser struct {
 	DeletedAt   time.Time
 }
 
-//DebitcardUser model
+//DebitcardUser model.
 type DebitcardUser struct {
 	ID          int
 	Number      int
@@ -134,9 +134,17 @@ type DebitcardUser struct {
 	AssighnDate time.Time
 }
 
+// AdminPanelUser model.
+type AdminPanelUser struct {
+	ID       int
+	Username string
+	Password string
+	RealName string
+}
+
 //Mall model
 type Mall struct {
-	ID   int
+	ID   int `sql:",AUTO_INCREMENT"`
 	Name string
 }
 
@@ -155,9 +163,10 @@ type MetaProduct struct {
 	Revision  int
 }
 
+// Product model.
 type Product struct {
 	ID                int `sql:"id"`
-	ShopId            int
+	ShopID            int
 	Name              string
 	Brand             string
 	Code              int
