@@ -154,10 +154,10 @@ type AdminPanelUser struct {
 
 //Mall model
 type Mall struct {
-	ID         int `sql:",AUTO_INCREMENT"`
-	Name       string
-	FloorCount int
-	UnitCount  int
+	ID         int    `sql:",AUTO_INCREMENT" json:"id"`
+	Name       string `json:"name"`
+	FloorCount int    `json:"floor_count"`
+	UnitCount  int    `json:"unit_count"`
 }
 
 // //ShopsDetails model--dont need it
