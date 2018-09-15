@@ -11,16 +11,6 @@ type Media struct {
 	Path  string
 }
 
-// Model3D type.
-type Model3D struct {
-	Title        string
-	ObjectPath   string
-	TexturesPath []struct {
-		Path      string
-		Thumbnail string
-	}
-}
-
 // Address type.
 type Address struct {
 	Country     string
@@ -40,7 +30,7 @@ type BankAccount struct {
 
 //Discount model //TODO: ????
 type Discount struct {
-	ID         int `sql:",AUTO_INCREMENT" json:"id"`
+	ID         int
 	Percentage int
 	ValidTime  time.Time
 }
@@ -49,7 +39,7 @@ type Discount struct {
 
 //SMS model.
 type SMS struct {
-	ID          int64 `sql:",AUTO_INCREMENT" json:"id"`
+	ID          int64 `json:"-"`
 	Code        int
 	UUID        string
 	PhoneNumber string
@@ -62,7 +52,7 @@ type SMS struct {
 // AppInfo is used to keep the latest version of different components of the
 // system in database such as app version or backend version.AppInfo.
 type AppInfo struct {
-	ID          int64 `sql:",AUTO_INCREMENT" json:"id"`
+	ID          int64 `json:"-"`
 	Name        string
 	Version     string
 	IsSupported bool
@@ -70,9 +60,10 @@ type AppInfo struct {
 
 //******************************************************************************
 
-// UserType enum type.TODO: sepehr will check if is this needed or not
+// UserType enum type.
 type UserType string
 
+// TODO: let sepehr delete this
 const (
 	// UserTypeBusinessOwner enum value.
 	UserTypeBusinessOwner UserType = "business-owner"
@@ -86,7 +77,7 @@ const (
 
 //AppUser model
 type AppUser struct {
-	ID                int `sql:",AUTO_INCREMENT" json:"id"`
+	ID                int `json:"-"`
 	PhoneNumber       string
 	FirstName         string
 	LastName          string
@@ -103,7 +94,7 @@ type AppUser struct {
 
 //ShopUser model
 type ShopUser struct {
-	ID          int `sql:",AUTO_INCREMENT" json:"id"`
+	ID          int `json:"-"`
 	PhoneNumber string
 	FirstName   string
 	LastName    string
@@ -119,7 +110,7 @@ type ShopUser struct {
 
 //SuperUser model
 type SuperUser struct {
-	ID          int `sql:",AUTO_INCREMENT" json:"id"`
+	ID          int `json:"-"`
 	PhoneNumber string
 	FirstName   string
 	LastName    string
@@ -133,9 +124,9 @@ type SuperUser struct {
 	DeletedAt   time.Time
 }
 
-//DebitcardUser model.
+//DebitcardUser model
 type DebitcardUser struct {
-	ID          int `sql:",AUTO_INCREMENT" json:"id"`
+	ID          int
 	Number      int
 	ShopID      int
 	UserID      int
@@ -144,40 +135,30 @@ type DebitcardUser struct {
 	AssighnDate time.Time
 }
 
-// AdminPanelUser model.
-type AdminPanelUser struct {
-	ID       int `sql:",AUTO_INCREMENT" json:"id"`
-	Username string
-	Password string
-	RealName string
-}
-
 //Mall model
 type Mall struct {
-	ID         int    `sql:",AUTO_INCREMENT" json:"id"`
-	Name       string `json:"name"`
-	FloorCount int    `json:"floor_count"`
-	UnitCount  int    `json:"unit_count"`
+	ID   int
+	Name string
 }
 
-// //ShopsDetails model--dont need it
-// type ShopsDetails struct {
-// 	ID              int
-// 	MallID          int
-// 	AppAddress      int
-// 	ReadableAddress string
-// }
+//ShopsDetails model
+type ShopsDetails struct {
+	ID              int
+	MallID          int
+	AppAddress      int
+	ReadableAddress string
+}
 
 // MetaProduct model.
 type MetaProduct struct {
-	ID        int `sql:",AUTO_INCREMENT" json:"id"`
+	ID        int `json:"-"`
 	ProductID int
 	Revision  int
 }
 
-// Product model.
+//Product model.
 type Product struct {
-	ID                int `sql:",AUTO_INCREMENT" json:"id"`
+	ID                int `sql:"id"`
 	ShopID            int
 	Name              string
 	Brand             string
@@ -189,7 +170,6 @@ type Product struct {
 	Discount          int
 	Thumbnail         string
 	Gallery           []Media
-	Gallery3D         Model3D
 	DeliveryPrice     int
 	Guarantee         string
 	Description       string
@@ -201,7 +181,7 @@ type Product struct {
 
 //ProductAttributes model
 type ProductAttributes struct {
-	ID       int `sql:",AUTO_INCREMENT" json:"id"`
+	ID       int
 	Name     string
 	DataType string
 	IsArray  bool
@@ -211,14 +191,14 @@ type ProductAttributes struct {
 
 // MetaShop model.
 type MetaShop struct {
-	ID       int `sql:",AUTO_INCREMENT" json:"id"`
+	ID       int `json:"-"`
 	ShopID   int
 	Revision int
 }
 
 //Shop model
 type Shop struct {
-	ID           int `sql:",AUTO_INCREMENT" json:"id"`
+	ID           int `json:"-"`
 	MallID       int
 	ContractID   int
 	ShopName     string
@@ -238,7 +218,7 @@ type Shop struct {
 
 //Category model
 type Category struct {
-	ID        int `sql:",AUTO_INCREMENT" json:"id"`
+	ID        int
 	Name      string
 	Thumbnail Media
 }
@@ -246,9 +226,10 @@ type Category struct {
 //******************************************************************************
 
 //FIXME: add 4 field for %
+
 //Contracts model (contracts are immutible)
 type Contracts struct {
-	ID             int `sql:",AUTO_INCREMENT" json:"id"`
+	ID             int `json:"-"`
 	Number         int
 	ContractScan   []Media
 	ContracrtType  string //pysical or virtual
