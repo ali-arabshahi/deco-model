@@ -30,7 +30,7 @@ type Address struct {
 	IsDefault   bool   `json:"is_default"`
 }
 
-//BankAccount type
+//BankAccount type // DO WE REALLY NEED IT?
 type BankAccount struct {
 	Bank          string `json:"bank"`
 	OwnerName     string `json:"owner_name"`
@@ -244,20 +244,19 @@ type Category struct {
 
 //******************************************************************************
 
-//FIXME: add 4 field for %
-
-//Contract model (contracts are immutible)
+// Contract model.
 type Contract struct {
-	ID             int           `sql:",AUTO_INCREMENT" json:"id"`
-	Number         int           `json:"number"`
-	ContractScan   []Media       `json:"contract_scan"`
-	ContracrtType  string        `json:"contract_type"` //pysical or virtual
-	CompaneyName   string        `json:"companey_name"`
-	Date           time.Time     `json:"date"`
-	BankAccount    []BankAccount `json:"bank_account"`
-	Duration       int           `json:"duration"` //number of month
-	MontlytDueDate time.Time     `json:"montly_due_date"`
-	CreatedAt      time.Time     `json:"create_at"`
-	UpdatedAt      time.Time     `json:"update_at"`
-	DeletedAt      time.Time     `json:"deleted_at"`
+	ID     int `sql:",AUTO_INCREMENT" json:"id"`
+	Number int `json:"number"`
+	// ContractScan   []Media   `json:"contract_scan"`
+	Scans          []string  `json:"scans"`
+	Type           string    `json:"type"` //pysical or virtual
+	CompanyName    string    `json:"company_name"`
+	Date           time.Time `json:"date"`
+	BankAccounts   []string  `json:"bank_accounts"`
+	Duration       int       `json:"duration"`
+	MontlytDueDate time.Time `json:"montly_due_date"` //WTF???
+	CreatedAt      time.Time `json:"create_at"`
+	UpdatedAt      time.Time `json:"update_at"`
+	DeletedAt      time.Time `json:"deleted_at"`
 }
