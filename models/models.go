@@ -11,13 +11,13 @@ type Media struct {
 	Path  string `json:"path"`
 }
 
-// Model3D type.TODO:sepehr ino ye check bokon.age benazaret in ziadi karie esme texture ro avaz konam,masaln beshe meta.
-// bad kolan be media ezafe she.to halate mamoli khali mimone vali vagti object 3d bashe ba texture por mishe
+// Model3D type.
 type Model3D struct {
-	Title    string  `json:"title"`
-	Type     string  `json:"type"` // gif, png, mp4, ...
-	Path     string  `json:"path"`
-	Textures []Media `json:"textures"`
+	ObjectPath string `json:"path"`
+	Textures   []struct {
+		ThumbnailPath string `json:"thumbnail"`
+		Path          string `json:"path"`
+	} `json:"textures"`
 }
 
 // Address type.
@@ -181,15 +181,15 @@ type Product struct {
 	Name              string                 `json:"name"`
 	Brand             string                 `json:"brand"`
 	Code              int                    `json:"code"`
-	Price             int                    `json:"price"`
+	Price             float64                `json:"price"`
 	DeliveryTime      int                    `json:"delivery_time"`
-	ManufactureSerial string                 `json:"manufacture_serial"`
+	ManufactureSerial string                 `json:"manufacture_serial"` // <== WTF
 	CategoryID        int                    `json:"category_id"`
-	Discount          int                    `json:"discount"`
+	Discount          float64                `json:"discount"`
 	Thumbnail         string                 `json:"thumbnail"`
 	Gallery           []Media                `json:"gallery"`
 	Gallery3D         Model3D                `json:"gallery3d"`
-	DeliveryPrice     int                    `json:"delivery_price"`
+	DeliveryPrice     float64                `json:"delivery_price"`
 	Guarantee         string                 `json:"guarantee"`
 	Description       string                 `json:"description"`
 	Attributes        map[string]interface{} `json:"attributes"`
