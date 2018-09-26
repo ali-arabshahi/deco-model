@@ -4,12 +4,12 @@ import "time"
 
 //******************************************************************************
 
-// Media type.
-type Media struct {
-	Title string `json:"title"`
-	Type  string `json:"type"` // gif, png, mp4, ...
-	Path  string `json:"path"`
-}
+// // Media type.--dont need it
+// type Media struct {
+// 	Title string `json:"title"`
+// 	Type  string `json:"type"` // gif, png, mp4, ...
+// 	Path  string `json:"path"`
+// }
 
 // Model3D type.
 type Model3D struct {
@@ -187,7 +187,7 @@ type Product struct {
 	CategoryID        int                    `json:"category_id"`
 	Discount          float64                `json:"discount"`
 	Thumbnail         string                 `json:"thumbnail"`
-	Gallery           []Media                `json:"gallery"`
+	Gallery           []string               `json:"gallery"`
 	Gallery3D         Model3D                `json:"gallery3d"`
 	DeliveryPrice     float64                `json:"delivery_price"`
 	Guarantee         string                 `json:"guarantee"`
@@ -227,8 +227,8 @@ type Shop struct {
 	VirAddress   string    `json:"vir_address"` // TODO: format f01-n11 floor 3 number 11
 	Adress       Address   `json:"address"`
 	PhoneNumbers []string  `pg:",array" json:"phone_number"`
-	Thumbnail    Media     `json:"thumbnail"`     // TODO: create from on file chossen by user
-	MediaGallery []Media   `json:"media_gallery"` // TODO: hard disk format (by name or by directory hierarchical)
+	Thumbnail    string    `json:"thumbnail"`     // TODO: create from on file chossen by user
+	MediaGallery []string  `json:"media_gallery"` // TODO: hard disk format (by name or by directory hierarchical)
 	Description  string    `json:"description"`
 	CreatedAt    time.Time `json:"create_at"`
 	UpdatedAt    time.Time `json:"update_at"`
@@ -239,7 +239,7 @@ type Shop struct {
 type Category struct {
 	ID        int    `sql:",AUTO_INCREMENT" json:"id"`
 	Name      string `json:"name"`
-	Thumbnail Media  `json:"thumbnail"`
+	Thumbnail string `json:"thumbnail"`
 }
 
 //******************************************************************************
