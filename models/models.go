@@ -11,13 +11,16 @@ import "time"
 // 	Path  string `json:"path"`
 // }
 
+//Texture type.
+type Texture struct {
+	ThumbnailPath string `json:"thumbnail"`
+	Path          string `json:"path"`
+}
+
 // Model3D type.
 type Model3D struct {
-	ObjectPath string `json:"path"`
-	Textures   []struct {
-		ThumbnailPath string `json:"thumbnail"`
-		Path          string `json:"path"`
-	} `json:"textures"`
+	ObjectPath string    `json:"path"`
+	Textures   []Texture `json:"textures"`
 }
 
 // Address type.
@@ -183,11 +186,11 @@ type Product struct {
 	Code              int                    `json:"code"`
 	Price             float64                `json:"price"`
 	DeliveryTime      int                    `json:"delivery_time"`
-	ManufactureSerial string                 `json:"manufacture_serial"` // <== WTF
+	ManufactureSerial string                 `json:"manufacture_serial"`
 	CategoryID        int                    `json:"category_id"`
 	Discount          float64                `json:"discount"`
 	Thumbnail         string                 `json:"thumbnail"`
-	Gallery           []string               `json:"gallery"`
+	Gallery           []string               `json:"gallery" pg:",array"`
 	Gallery3D         Model3D                `json:"gallery3d"`
 	DeliveryPrice     float64                `json:"delivery_price"`
 	Guarantee         string                 `json:"guarantee"`
@@ -224,11 +227,11 @@ type Shop struct {
 	Brand        string    `json:"brand"`
 	Owner        string    `json:"owner"`
 	Keeper       string    `json:"keeper"`
-	VirAddress   string    `json:"vir_address"` // TODO: format f01-n11 floor 3 number 11
+	VirAddress   string    `json:"vir_address"` //format f01-n11 floor 3 number 11
 	Adress       Address   `json:"address"`
-	PhoneNumbers []string  `pg:",array" json:"phone_number"`
-	Thumbnail    string    `json:"thumbnail"`     // TODO: create from on file chossen by user
-	MediaGallery []string  `json:"media_gallery"` // TODO: hard disk format (by name or by directory hierarchical)
+	PhoneNumbers []string  `json:"phone_number" pg:",array"`
+	Thumbnail    string    `json:"thumbnail"`                 // TODO: create from on file chossen by user
+	MediaGallery []string  `json:"media_gallery" pg:",array"` // TODO: hard disk format (by name or by directory hierarchical)
 	Description  string    `json:"description"`
 	CreatedAt    time.Time `json:"create_at"`
 	UpdatedAt    time.Time `json:"update_at"`
@@ -249,13 +252,13 @@ type Contract struct {
 	ID     int `sql:",AUTO_INCREMENT" json:"id"`
 	Number int `json:"number"`
 	// ContractScan   []Media   `json:"contract_scan"`
-	Scans          []string  `json:"scans"`
+	Scans          []string  `json:"scans" pg:",array"`
 	Type           string    `json:"type"` //pysical or virtual
 	CompanyName    string    `json:"company_name"`
 	Date           time.Time `json:"date"`
-	BankAccounts   []string  `json:"bank_accounts"`
+	BankAccounts   []string  `json:"bank_accounts" pg:",array"`
 	Duration       int       `json:"duration"`
-	MontlytDueDate time.Time `json:"montly_due_date"` //WTF???
+	MontlytDueDate time.Time `json:"montly_due_date"`
 	CreatedAt      time.Time `json:"create_at"`
 	UpdatedAt      time.Time `json:"update_at"`
 	DeletedAt      time.Time `json:"deleted_at"`
